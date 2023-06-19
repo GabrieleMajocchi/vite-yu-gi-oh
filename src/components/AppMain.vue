@@ -16,14 +16,20 @@
         created() {
             axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0')
             .then((response)=>{
-                this.cards = response.data.data;
+                setTimeout(()=>{
+                    this.cards = response.data.data;
+                }, 2500);
             })
         },
     }
 </script>
 
 <template>
-    <main>
+    <div class="loader" v-if="cards.length === 0">
+        <img src="../assets/img/loading-yugioh.gif" alt="loader gif">
+    </div>
+
+    <main v-else>
         <Dropdown class="dropdown"/>
         <div class="yugiCards d-flex flex-wrap">
             <div class="foundedCards w-100 fw-bold d-flex align-items-center p-3">
@@ -59,5 +65,10 @@
         padding: 3rem;
         margin-top: 2rem;
         width: 1670px;
+    }
+
+    .loader img{
+        width: 100vw;
+        height: calc(100vh - 57.5px);
     }
 </style>
