@@ -26,6 +26,9 @@
     <main>
         <Dropdown class="dropdown"/>
         <div class="yugiCards d-flex flex-wrap">
+            <div class="foundedCards w-100 fw-bold d-flex align-items-center p-3">
+                <p class="m-0">Found {{cards.length}} cards</p>
+            </div>
             <SingleCard v-for="card in cards" :cardName="card.name" :cardImg="card.card_images[0].image_url" :cardArchetype="card.archetype"/>
         </div>
     </main>
@@ -37,6 +40,11 @@
 
     main{
         background-color: #d48f38;
+    }
+
+    .foundedCards{
+        background-color: #212529;
+        color: white;
     }
     .dropdown{
         margin-left: 12rem;
