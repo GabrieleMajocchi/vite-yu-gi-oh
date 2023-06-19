@@ -35,7 +35,7 @@
             <div class="foundedCards w-100 fw-bold d-flex align-items-center p-3">
                 <p class="m-0">Found {{cards.length}} cards</p>
             </div>
-            <SingleCard v-for="card in cards" :cardName="card.name" :cardImg="card.card_images[0].image_url" :cardArchetype="card.archetype"/>
+            <SingleCard v-for="card in cards" :cardName="card.name" :cardImg="card.card_images[0].image_url" :cardArchetype="card.archetype" :cardEbay="card.card_prices[0].ebay_price"/>
         </div>
     </main>
 </template>
