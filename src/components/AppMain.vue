@@ -2,6 +2,7 @@
     import Dropdown from './DropDown.vue';
     import SingleCard from './SingleCard.vue';
     import axios from 'axios';
+    import { store } from '../store.js';
     export default {
         name: 'AppMain',
         components: {
@@ -11,15 +12,28 @@
         data() {
             return {
                 cards: [],
+                archetypes: [],
+                store,
+            }
+        },
+        methods: {
+            searchCards(archetype = 'Blue-Eyes') {
+                axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0&archetype='+archetype)
+                .then((response)=>{
+                    this.cards = response.data.data;
+                })
+            },
+            getArchetypes() {
+                axios.get('https://db.ygoprodeck.com/api/v7/archetypes.php')
+                .then((response)=>{
+                    console.log(response)
+                    this.archetypes = response.data;
+                })
             }
         },
         created() {
-            axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=20&offset=0')
-            .then((response)=>{
-                setTimeout(()=>{
-                    this.cards = response.data.data;
-                }, 2500);
-            })
+            setTimeout(() => {this.searchCards()}, 2500);
+            this.getArchetypes();
         },
     }
 </script>
@@ -30,7 +44,7 @@
     </div>
 
     <main v-else>
-        <Dropdown class="dropdown"/>
+        <Dropdown class="dropdown" :archetypeslist="archetypes" @changedtype="searchCards"/>
         <div class="yugiCards d-flex flex-wrap">
             <div class="foundedCards w-100 fw-bold d-flex align-items-center p-3">
                 <p class="m-0">Found {{cards.length}} cards</p>
